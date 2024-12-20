@@ -59,9 +59,43 @@ $ratio_class = 'ratio-' . str_replace(':', '-', $ratio);
             </div>
             
             <div class="<?php echo $className; ?>__nav">
-                <button class="<?php echo $className; ?>__prev">Précédent</button>
-                <button class="<?php echo $className; ?>__next">Suivant</button>
+                <button class="<?php echo $className; ?>__prev" aria-label="Image précédente">Précédent</button>
+                <button class="<?php echo $className; ?>__next" aria-label="Image suivante">Suivant</button>
             </div>
         </div>
+    <div class="lightbox">Lightbox</div>
+        <?php 
+        // Exemple d'utilisation séparée de la lightbox
+        // Note: Ce code est optionnel car la lightbox est déjà initialisée dans le slider
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pour initialiser une lightbox séparément
+            const images = document.querySelectorAll('.lightbox');
+            const slides = Array.from(images).map(img => ({
+                src: img.dataset.fullSrc,
+                caption: img.dataset.caption
+            }));
+
+         // Exemple avec du HTML direct
+const slides_lightbox = [
+    {
+        type: 'html',
+        src: '<div class="mon-contenu">Mon contenu personnalisé</div>',
+        className: 'ma-classe-specifique',
+        caption: 'Ma légende'
+    },
+    // Exemple avec un élément DOM existant
+    {
+        type: 'html',
+        src: document.querySelector('.mon-element-existant'),
+        className: 'autre-classe',
+        caption: 'Autre légende'
+    }
+];
+
+const lightbox = new Lightbox('lightbox', slides_lightbox);
+        });
+        </script>
     <?php endif; ?> 
 </div>

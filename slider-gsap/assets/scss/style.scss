@@ -1,4 +1,5 @@
 @import "mixins";
+@import "lightbox";
 
 .wp-block-ng1-slider-gsap {
     &__container {
@@ -108,128 +109,7 @@
         object-fit: cover;
     }
 
-    &__lightbox {
-        display: flex;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-
-        &.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        &-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 9999;
-        }
-
-        &-content {
-            position: relative;
-            z-index: 10000;
-            width: auto;
-            height: auto;
-            max-width: 90vw;
-            max-height: 90vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        &-image {
-            display: block;
-            max-width: 90vw;
-            max-height: 90vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-
-            &.transitioning {
-                opacity: 0;
-            }
-        }
-
-        &-close,
-        &-prev,
-        &-next {
-            position: fixed;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid white;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10000;
-
-            &:hover {
-                transform: scale(1.1);
-                background: rgba(0, 0, 0, 0.8);
-            }
-        }
-
-        &-close {
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            font-size: 24px;
-        }
-
-        &-prev,
-        &-next {
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            font-size: 30px;
-        }
-
-        &-prev {
-            left: 20px;
-        }
-
-        &-next {
-            right: 20px;
-        }
-
-        // Ajustement pour les écrans en mode portrait
-        @media (orientation: portrait) {
-            &-image {
-                max-height: 80vh; // Un peu plus petit en mode portrait pour la navigation
-                width: auto;
-            }
-        }
-
-        // Ajustement pour les écrans en mode paysage
-        @media (orientation: landscape) {
-            &-image {
-                max-height: 90vh;
-                width: auto;
-            }
-        }
-    }
+  
 }
+
+

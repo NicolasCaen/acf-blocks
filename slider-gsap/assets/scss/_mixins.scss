@@ -4,7 +4,7 @@
 
 @function PxToRem($size) {
     $remSize: $size / 16;
-    @return #rem;
+    @return #{$remSize}rem;
 }
 
 @function variable($x) {
