@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/AdvancedCustomFields/schemas/main/json/block.json",
+    "name": "up/dynamic-table",
+    "title": "Table \"ACF\"",
+    "description": "Description du bloc",
+    "category": "pixelea",
+    "icon": "admin-comments",
+    "apiVersion": 3,
+    "keywords": ["ng1"],
+    "acf": {
+        "mode": "auto",
+        "renderTemplate": "view.php",
+        "renderCallback": "render_callback"
+    },
+    "supports": {
+        "align": true,
+        "anchor": true,
+        "html": false,
+        "jsx": true,
+        "color": {
+            "background": true,
+            "text": true,
+            "link": true
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true
+        },
+        "typography": {
+            "fontSize": true,
+            "lineHeight": true
+        }
+    },
+    "style": ["file:./style.css"],
+    "script": ["file:./assets/js/function.js","jquery"]
+} 

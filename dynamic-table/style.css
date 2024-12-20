@@ -1,0 +1,20 @@
+.dynamic-table-block table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.dynamic-table-block th, 
+.dynamic-table-block td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color:inherit;
+}
+
+.dynamic-table-block thead {
+    background-color: #f2f2f2;
+}
+body .has-text-color {
+color:inherit !important;
+}

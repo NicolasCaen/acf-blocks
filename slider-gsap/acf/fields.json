@@ -1,0 +1,25 @@
+[
+    {
+        "key": "group_9de289f7-55c4-46a6-9ee9-63ff3c0ddcf5",
+        "title": "Slider Gsap",
+        "fields": [],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "ng1\/slider-gsap"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    }
+]

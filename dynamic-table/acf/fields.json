@@ -1,0 +1,715 @@
+[
+    {
+        "ID": 819,
+        "key": "group_dynamic_table_block",
+        "title": "Configuration du Tableau Dynamique",
+        "fields": [
+            {
+                "ID": 820,
+                "key": "field_data_source",
+                "label": "Source de Donn\u00e9es",
+                "name": "data_source",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "select",
+                "value": null,
+                "menu_order": 0,
+                "instructions": "Choisissez la source des donn\u00e9es pour votre tableau",
+                "required": 1,
+                "id": "",
+                "class": "",
+                "conditional_logic": 0,
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "cpt": "Custom Post Type",
+                    "query": "Query",
+                    "acf_repeater": "Champ R\u00e9p\u00e9teur ACF",
+                    "csv": "Fichier CSV"
+                },
+                "default_value": "cpt",
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "_name": "data_source",
+                "_valid": 1
+            },
+            {
+                "ID": 821,
+                "key": "field_cpt_selection",
+                "label": "Custom Post Type",
+                "name": "selected_cpt",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "select",
+                "value": null,
+                "menu_order": 1,
+                "instructions": "S\u00e9lectionnez le type de contenu \u00e0 afficher",
+                "required": 0,
+                "id": "",
+                "class": "",
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "cpt"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "query"
+                        }
+                    ]
+                ],
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "post": "Articles",
+                    "page": "Pages",
+                    "attachment": "Fichier m\u00e9dia",
+                    "up_program_program": "Programmes",
+                    "up_program_land": "Terrains",
+                    "up_program_lot": "Lots"
+                },
+                "default_value": false,
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "_name": "selected_cpt",
+                "_valid": 1
+            },
+            {
+                "ID": 825,
+                "key": "field_columns_selection",
+                "label": "Colonnes \u00e0 Afficher",
+                "name": "selected_columns",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "repeater",
+                "value": null,
+                "menu_order": 2,
+                "instructions": "S\u00e9lectionnez les colonnes \u00e0 afficher dans le tableau",
+                "required": 0,
+                "id": "",
+                "class": "",
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "cpt"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "query"
+                        }
+                    ]
+                ],
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Ajouter un \u00e9l\u00e9ment",
+                "rows_per_page": 20,
+                "_name": "selected_columns",
+                "_valid": 1,
+                "sub_fields": [
+                    {
+                        "ID": 839,
+                        "key": "field_675ae7a7c91bb",
+                        "label": "Label",
+                        "name": "label",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 0,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": 0,
+                        "parent": 825,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_columns_selection",
+                        "_name": "label",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 840,
+                        "key": "field_675ae80fc91bd",
+                        "label": "type",
+                        "name": "type",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "select",
+                        "value": null,
+                        "menu_order": 1,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": 0,
+                        "parent": 825,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "meta": "M\u00e9tadonn\u00e9e",
+                            "taxonomy": "Taxonomie",
+                            "title": "Titre",
+                            "date": "Date",
+                            "author": "Auteur",
+                            "excerpt": "R\u00e9sum\u00e9",
+                            "thumbnail": "Image mise en avant",
+                            "ID": "Identifiant",
+                            "simple": "Afficher valeur"
+                        },
+                        "default_value": false,
+                        "return_format": "value",
+                        "multiple": 0,
+                        "allow_null": 0,
+                        "allow_in_bindings": 1,
+                        "ui": 0,
+                        "ajax": 0,
+                        "placeholder": "",
+                        "_name": "type",
+                        "_valid": 1,
+                        "parent_repeater": "field_columns_selection"
+                    },
+                    {
+                        "ID": 836,
+                        "key": "field_675ae6a5266c9",
+                        "label": "M\u00e9ta",
+                        "name": "meta",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 2,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_675ae80fc91bd",
+                                    "operator": "==",
+                                    "value": "meta"
+                                }
+                            ]
+                        ],
+                        "parent": 825,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_columns_selection",
+                        "_name": "meta",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 841,
+                        "key": "field_675ae7c8c91bc",
+                        "label": "Taxonomie",
+                        "name": "taxonomy",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "select",
+                        "value": null,
+                        "menu_order": 3,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_675ae80fc91bd",
+                                    "operator": "==",
+                                    "value": "taxonomy"
+                                }
+                            ]
+                        ],
+                        "parent": 825,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "category": "Cat\u00e9gories",
+                            "post_tag": "\u00c9tiquettes",
+                            "post_format": "Formats",
+                            "up_program_taxonomy_city": "Villes",
+                            "up_program_taxonomy_scheme": "Dispositif",
+                            "up_program_taxonomy_state": "\u00c9tat",
+                            "up_program_taxonomy_program": "Programme",
+                            "up_program_property_type": "Type de propri\u00e9t\u00e9",
+                            "up_program_taxonomy_level": "\u00c9tage",
+                            "up_program_taxonomy_rooms": "Pi\u00e8ces"
+                        },
+                        "default_value": false,
+                        "return_format": "value",
+                        "multiple": 0,
+                        "allow_null": 0,
+                        "ui": 1,
+                        "ajax": 0,
+                        "placeholder": "",
+                        "parent_repeater": "field_columns_selection",
+                        "_name": "taxonomy",
+                        "_valid": 1
+                    }
+                ]
+            },
+            {
+                "ID": 843,
+                "key": "field_675af62e17840",
+                "label": "Colonnes \u00e0 Afficher",
+                "name": "selected_meta_columns",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "repeater",
+                "value": null,
+                "menu_order": 3,
+                "instructions": "S\u00e9lectionnez les colonnes \u00e0 afficher dans le tableau",
+                "required": 0,
+                "id": "",
+                "class": "",
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "acf_repeater"
+                        }
+                    ]
+                ],
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Ajouter un \u00e9l\u00e9ment",
+                "rows_per_page": 20,
+                "_name": "selected_meta_columns",
+                "_valid": 1,
+                "sub_fields": [
+                    {
+                        "ID": 844,
+                        "key": "field_675af62e17841",
+                        "label": "Label",
+                        "name": "label",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 0,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": 0,
+                        "parent": 843,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_675af62e17840",
+                        "_name": "label",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 845,
+                        "key": "field_675af62e17843",
+                        "label": "M\u00e9ta",
+                        "name": "meta",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 1,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_675af62e17842",
+                                    "operator": "==",
+                                    "value": "meta"
+                                }
+                            ]
+                        ],
+                        "parent": 843,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_675af62e17840",
+                        "_name": "meta",
+                        "_valid": 1
+                    }
+                ]
+            },
+            {
+                "ID": 871,
+                "key": "field_675c3d96f1359",
+                "label": "query",
+                "name": "query",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "textarea",
+                "value": null,
+                "menu_order": 4,
+                "instructions": "",
+                "required": 0,
+                "id": "",
+                "class": "",
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "query"
+                        }
+                    ]
+                ],
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": "",
+                "placeholder": "",
+                "new_lines": "",
+                "_name": "query",
+                "_valid": 1
+            },
+            {
+                "ID": 823,
+                "key": "field_csv_file",
+                "label": "Fichier CSV",
+                "name": "csv_file",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "file",
+                "value": null,
+                "menu_order": 5,
+                "instructions": "Importez un fichier CSV",
+                "required": false,
+                "id": "",
+                "class": "",
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "csv"
+                        }
+                    ]
+                ],
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "url",
+                "library": "all",
+                "min_size": 0,
+                "max_size": 0,
+                "mime_types": "",
+                "_name": "csv_file",
+                "_valid": 1
+            },
+            {
+                "ID": 824,
+                "key": "field_acf_repeater",
+                "label": "Champ R\u00e9p\u00e9teur ACF",
+                "name": "acf_repeater_field",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "text",
+                "value": null,
+                "menu_order": 6,
+                "instructions": "Nom du champ r\u00e9p\u00e9teur ACF \u00e0 utiliser",
+                "required": false,
+                "id": "",
+                "class": "",
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_data_source",
+                            "operator": "==",
+                            "value": "acf_repeater"
+                        }
+                    ]
+                ],
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "_name": "acf_repeater_field",
+                "_valid": 1
+            },
+            {
+                "ID": 872,
+                "key": "field_675c3e1bf135a",
+                "label": "Params",
+                "name": "params",
+                "aria-label": "",
+                "prefix": "acf",
+                "type": "group",
+                "value": null,
+                "menu_order": 7,
+                "instructions": "",
+                "required": 0,
+                "id": "",
+                "class": "",
+                "conditional_logic": 0,
+                "parent": 819,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "ID": 826,
+                        "key": "field_table_style",
+                        "label": "Style du Tableau",
+                        "name": "table_style",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "select",
+                        "value": null,
+                        "menu_order": 0,
+                        "instructions": "Choisissez le style de pr\u00e9sentation du tableau",
+                        "required": false,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": false,
+                        "parent": 872,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "default": "D\u00e9faut",
+                            "striped": "Lignes altern\u00e9es",
+                            "bordered": "Bordures",
+                            "hover": "Effet survol"
+                        },
+                        "default_value": "default",
+                        "multiple": 0,
+                        "allow_null": 0,
+                        "ui": 0,
+                        "ajax": 0,
+                        "placeholder": "",
+                        "return_format": "value",
+                        "_name": "table_style",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 828,
+                        "key": "field_pagination",
+                        "label": "Pagination",
+                        "name": "pagination_enabled",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "true_false",
+                        "value": null,
+                        "menu_order": 1,
+                        "instructions": "Activer la pagination du tableau",
+                        "required": false,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": false,
+                        "parent": 872,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "message": "",
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "_name": "pagination_enabled",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 827,
+                        "key": "field_sorting_options",
+                        "label": "Options de Tri",
+                        "name": "sorting_enabled",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "true_false",
+                        "value": null,
+                        "menu_order": 2,
+                        "instructions": "Activer le tri des colonnes",
+                        "required": false,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": false,
+                        "parent": 872,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "message": "",
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "_name": "sorting_enabled",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 829,
+                        "key": "field_items_per_page",
+                        "label": "\u00c9l\u00e9ments par Page",
+                        "name": "items_per_page",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "number",
+                        "value": null,
+                        "menu_order": 3,
+                        "instructions": "Nombre d'\u00e9l\u00e9ments \u00e0 afficher par page",
+                        "required": false,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_pagination",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "parent": 872,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 10,
+                        "min": 1,
+                        "max": 100,
+                        "step": 1,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "_name": "items_per_page",
+                        "_valid": 1
+                    }
+                ],
+                "_name": "params",
+                "_valid": 1
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "up\/dynamic-table"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "acf_after_title",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "field",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "Configuration du bloc de tableau dynamique",
+        "show_in_rest": 1,
+        "_valid": true
+    }
+]
