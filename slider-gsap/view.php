@@ -69,33 +69,21 @@ $ratio_class = 'ratio-' . str_replace(':', '-', $ratio);
         // Note: Ce code est optionnel car la lightbox est déjà initialisée dans le slider
         ?>
         <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Pour initialiser une lightbox séparément
-            const images = document.querySelectorAll('.lightbox');
-            const slides = Array.from(images).map(img => ({
-                src: img.dataset.fullSrc,
-                caption: img.dataset.caption
-            }));
 
-         // Exemple avec du HTML direct
-const slides_lightbox = [
-    {
-        type: 'html',
-        src: '<div class="mon-contenu">Mon contenu personnalisé</div>',
-        className: 'ma-classe-specifique',
-        caption: 'Ma légende'
-    },
-    // Exemple avec un élément DOM existant
-    {
-        type: 'html',
-        src: document.querySelector('.mon-element-existant'),
-        className: 'autre-classe',
-        caption: 'Autre légende'
-    }
-];
 
-const lightbox = new Lightbox('lightbox', slides_lightbox);
-        });
+            document.addEventListener('DOMContentLoaded', function() {
+                const sliders = document.querySelectorAll('.wp-block-ng1-slider-gsap__container');
+                if (sliders.length === 0) return;
+                
+                sliders.forEach(slider => {
+                    try {
+                        new GSAPSlider(slider);
+                    } catch (error) {
+                        console.error('Error initializing slider:', error);
+                    }
+                });
+            });
+
         </script>
     <?php endif; ?> 
 </div>

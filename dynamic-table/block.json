@@ -8,7 +8,7 @@
     "apiVersion": 3,
     "keywords": ["ng1"],
     "acf": {
-        "mode": "auto",
+        "mode": "preview",
         "renderTemplate": "view.php",
         "renderCallback": "render_callback"
     },

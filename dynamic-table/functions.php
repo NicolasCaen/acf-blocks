@@ -16,99 +16,21 @@ class UpDynamicTable {
         // add_filter('acf/load_field', array($this, 'populate_taxonomy_field'));
     }
 
-    // public function populate_custom_post_type_field($field) {
-    //     if ($field['name'] === 'selected_cpt') {
-    //         $post_types = get_post_types(array('public' => true), 'objects');
-            
-    //         $field['choices'] = array();
-            
-    //         foreach ($post_types as $post_type) {
-    //             $field['choices'][$post_type->name] = $post_type->label;
-    //         }
-    //     }
-        
-    //     return $field;
-    // }
 
-    // public function populate_cpt_columns_field($field) {
-    //     if ($field['name'] === 'selected_cpt_columns') {
-    //         $field['choices'] = array(
-    //             'title' => 'Titre',
-    //             'date' => 'Date',
-    //             'author' => 'Auteur',
-    //             'excerpt' => 'Extrait',
-    //             'thumbnail' => 'Image mise en avant'
-    //         );
-            
-    //         // Récupération du CPT sélectionné
-    //         $selected_cpt = get_field('selected_cpt');
-    //         if ($selected_cpt) {
-    //             $acf_fields = get_fields($selected_cpt);
-    //             if ($acf_fields) {
-    //                 foreach ($acf_fields as $key => $value) {
-    //                     $field['choices']['acf_' . $key] = $key;
-    //                 }
-    //             }
-                
-    //             global $wpdb;
-    //             $meta_keys = $wpdb->get_col($wpdb->prepare("
-    //                 SELECT DISTINCT meta_key 
-    //                 FROM $wpdb->postmeta pm 
-    //                 JOIN $wpdb->posts p ON p.ID = pm.post_id 
-    //                 WHERE p.post_type = %s 
-    //                 AND meta_key NOT LIKE '\_%'
-    //             ", $selected_cpt));
-                
-    //             if ($meta_keys) {
-    //                 foreach ($meta_keys as $meta_key) {
-    //                     $field['choices']['meta_' . $meta_key] = $meta_key;
-    //                 }
-    //             }
-    //         }
-    //     }
-        
-    //     return $field;
-    // }
 
-    // public function populate_taxonomies_field($field) {
-    //     if ($field['name'] === 'selected_taxonomies') {
-    //         $taxonomies = get_taxonomies(array('public' => true), 'objects');
-            
-    //         $field['choices'] = array();
-            
-    //         foreach ($taxonomies as $taxonomy) {
-    //             $field['choices'][$taxonomy->name] = $taxonomy->label;
-    //         }
-    //     }
-        
-    //     return $field;
-    // }
-
-    // public function populate_taxonomy_field($field) {
-    //     if ($field['name'] === 'taxonomy') {
-    //         $taxonomies = get_taxonomies(array('public' => true), 'objects');
-            
-    //         $field['type'] = 'select';
-    //         $field['choices'] = array();
-    //         $field['multiple'] = 0;
-    //         $field['allow_null'] = 0;
-    //         $field['ui'] = 1;
-    //         $field['ajax'] = 0;
-    //         $field['return_format'] = 'value';
-            
-    //         foreach ($taxonomies as $taxonomy) {
-    //             $field['choices'][$taxonomy->name] = $taxonomy->label;
-    //         }
-    //     }
-        
-    //     return $field;
-    // }
-
-    public function get_table_data($data_source) {
+    /**
+     * Retourne les données formatées pour le tableau en fonction de la source de données selectionnée
+     * 
+     * @param string $data_source La source de données selectionnée
+     * @return array Les données formatées pour le tableau
+     */
+    public function get_table_data($data_source,$block_fields) {
 
         switch($data_source) {
             case 'query':
                 $query_string = get_field('query');
+    
+          
                 if (empty($query_string)) {
                     $query_string ='{
                         "post_type": "page",
@@ -117,6 +39,7 @@ class UpDynamicTable {
                         "order": "DESC"
                     }';
                 }
+
                 $args = json_decode($query_string, true);
                 if(!empty(get_field('selected_cpt'))) {
                     $args['post_type'] = get_field('selected_cpt');
@@ -126,34 +49,44 @@ class UpDynamicTable {
                     error_log('Erreur de parsing JSON: ' . json_last_error_msg());
                     return array();
                 }
+                if(!empty($block_fields["query_id"])){
+                    $query = new WP_Query(apply_filters("dynamic_table_query_".$block_fields["query_id"],$args));
+                }else{
+                    $query = new WP_Query($args);
+                }
 
-                $query = new WP_Query($args);
+         
                 $posts = $query->posts;
                 
                 $formatted_data = array();
                 foreach ($posts as $post) {
+                    // Récupérer toutes les métadonnées du post
+                    $all_meta = get_post_meta($post->ID);
                     $row = array(
                         'ID' => $post->ID,
                         'title' => $post->post_title,
                         'excerpt' => wp_trim_words(get_the_excerpt($post), 20),
                         'date' => get_the_date('d/m/Y', $post),
                         'author' => get_the_author_meta('display_name', $post->post_author),
-                        'thumbnail' => get_the_post_thumbnail($post->ID, 'thumbnail')
+                        'thumbnail' => get_the_post_thumbnail($post->ID, 'thumbnail'),
                     );
-
+                    foreach ($all_meta as $meta_key => $meta_values) {
+                        // Prendre la première valeur si c'est un tableau
+                        $meta_value = is_array($meta_values) ? $meta_values[0] : $meta_values;
+                        $row[$meta_key] = $meta_value;
+                    }
                     $selected_columns = get_field('selected_columns');
-                    $fields = get_fields($post->ID);
+
                   
+              
                     foreach ($selected_columns as $column) {
                       
                         if ($column['type'] === 'meta') {
-                            if(isset($fields[$column['meta']])) {
-                                $value = $fields[$column['meta']];
-                                $row[$column['meta']] = $value;
-                            } else {
+                           
+                           
                                 $value = get_post_meta($post->ID, $column['meta'], true);
                                 $row[$column['meta']] = $value;
-                            }
+
                         } else if ($column['type'] === 'taxonomy') {
                             $terms = get_the_terms($post->ID, $column['taxonomy']);
                             if ($terms && !is_wp_error($terms)) {
@@ -164,17 +97,7 @@ class UpDynamicTable {
                         }
                     }
                     
-                    // Application des filtres sur chaque champ
-                    foreach ($row as $key => $value) {
-                        if (in_array($key, ['ID', 'title', 'excerpt', 'date', 'author', 'thumbnail'])) {
-                            $row[$key] = apply_filters('up_dynamic_table_field_' . $key, $value, $post->ID);
-                        } elseif (isset($column['type']) && $column['type'] === 'meta') {
-                            $row[$key] = apply_filters('up_dynamic_table_meta_' . $key, $value, $post->ID);
-                        } elseif (isset($column['type']) && $column['type'] === 'taxonomy') {
-                            $terms = get_the_terms($post->ID, $key);
-                            $row[$key] = apply_filters('up_dynamic_table_taxonomy_' . $key, $value, $terms, $post->ID);
-                        }
-                    }
+         
                     
                     $formatted_data[] = $row;
                 }
@@ -183,36 +106,53 @@ class UpDynamicTable {
 
            
             case 'acf_repeater':
-                $repeater_field = get_field('acf_repeater_field');
-                $selected_columns = get_field('selected_columns');
-                $formatted_data = array();
-                
-                if (!empty($repeater_field)) {
-                    $fields = get_field($repeater_field, get_the_ID());
+                    // Récupérer le nom du champ répéteur
+                    $repeater_field = get_field('acf_repeater_field');
                     
-                    if (!empty($fields)) {
-                        foreach ($fields as $field_index => $field) {
-                            $row = array();
-                            
-                            foreach ($selected_columns as $column) {
-                                if(!empty($field[$column['meta']])) {
-                                    $value = $field[$column['meta']];
-                                    $row[$column['meta']] = $value;
+                    // Récupérer les colonnes sélectionnées
+                    $selected_columns = get_field('selected_columns',$block);
+                    
+                    // Initialiser un tableau pour stocker les données formatées
+                    $formatted_data = array();
+                    
+                    // Vérifier si le champ répéteur existe et n'est pas vide
+                    if (!empty($repeater_field)) {
+                        // Récupérer les lignes du champ répéteur
+                        $fields = get_field($repeater_field, get_the_ID());
+                        var_dump($fields);
+                        var_dump($selected_columns);
+                        // Vérifier si des lignes existent
+                        if (!empty($fields)) {
+                            // Parcourir chaque ligne du répéteur
+                            foreach ($fields as $row) {
+                                // Initialiser un tableau pour stocker les données de la ligne courante
+                                $row_data = array();
+                                
+                                // Parcourir les colonnes sélectionnées
+                                foreach ($selected_columns as $column) {
+                                    // Vérifier si la colonne existe dans la ligne et n'est pas vide
+                                    if (!empty($row[$column['meta']])) {
+                                        // Récupérer la valeur de la colonne
+                                        $value = $row[$column['meta']];
+                                        
+                                        // Appliquer un filtre spécifique à la colonne
+                                        $value = apply_filters('up_dynamic_table_repeater_' . $column['meta'], $value, get_the_ID(), $field_index);
+                                        
+                                        // Ajouter la valeur au tableau de la ligne
+                                        $row_data[$column['meta']] = $value;
+                                    }
+                                }
+                                
+                                // Ajouter les données de la ligne au tableau formaté
+                                if (!empty($row_data)) {
+                                    $formatted_data[] = $row_data;
                                 }
                             }
-                            
-                            // Application des filtres sur chaque champ
-                            foreach ($row as $key => $value) {
-                                $row[$key] = apply_filters('up_dynamic_table_repeater_' . $key, $value, get_the_ID(), $field_index);
-                            }
-                            
-                            $formatted_data[] = $row;
                         }
                     }
-                }
-                
-                return $formatted_data;
-                
+                    
+                    // Retourner les données formatées
+                    return $formatted_data;
             case 'csv':
                 $csv_file = get_field('csv_file');
                 if ($csv_file) {
@@ -223,6 +163,7 @@ class UpDynamicTable {
                     
         }
     }
+    
 }
 
 // Initialisation

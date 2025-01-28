@@ -25,8 +25,8 @@ class Lightbox {
             <div class="up-gsap-lightbox__overlay ${this.baseClass}__lightbox-overlay"></div>
             <div class="up-gsap-lightbox__content ${this.baseClass}__lightbox-content">
                 <button class="up-gsap-lightbox__close ${this.baseClass}__lightbox-close">&times;</button>
-                <button class="up-gsap-lightbox__prev ${this.baseClass}__lightbox-prev">&lt;</button>
-                <button class="up-gsap-lightbox__next ${this.baseClass}__lightbox-next">&gt;</button>
+                <button style="font-family: 'Comic Sans MS', cursive;" class="up-gsap-lightbox__prev ${this.baseClass}__lightbox-prev">&lt;</button>
+                <button style="font-family: 'Comic Sans MS', cursive;" class="up-gsap-lightbox__next ${this.baseClass}__lightbox-next">&gt;</button>
                 <div class="up-gsap-lightbox__media-container ${this.baseClass}__lightbox-media-container"></div>
                 <div class="up-gsap-lightbox__caption ${this.baseClass}__lightbox-caption"></div>
             </div>
@@ -285,16 +285,3 @@ class GSAPSlider {
         isHovered ? this.stopAutoplay() : this.startAutoplay();
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    const sliders = document.querySelectorAll('.wp-block-ng1-slider-gsap__container');
-    if (sliders.length === 0) return;
-    
-    sliders.forEach(slider => {
-        try {
-            new GSAPSlider(slider);
-        } catch (error) {
-            console.error('Error initializing slider:', error);
-        }
-    });
-});

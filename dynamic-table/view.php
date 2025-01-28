@@ -20,11 +20,16 @@ extract($fields);
     $repeater_field = get_field('acf_repeater_field');
  
     $selected_columns = get_field('selected_columns');
-    $table_data = UpDynamicTable::get_instance()->get_table_data($data_source);    
+   /* ?>
+    <pre><?php var_dump($selected_columns); ?></pre> 
+    <?php
+    */
+    $table_data = UpDynamicTable::get_instance()->get_table_data($data_source,$fields);    
 
     ?>
 
     <div class="dynamic-table-block">
+
         <?php if (!empty($table_data) && !empty($selected_columns) ): ?>
             <table>
                 <thead>
@@ -44,21 +49,22 @@ extract($fields);
                                         $column['type'] ="value";
                                     }
                                      switch($column['type']) {
-                                        //case 'title':
-                                        //case 'excerpt':
-                                        //case 'date':
-                                        //case 'author':
-                                        //    echo esc_html($row[$column['type']]);
-                                        //    break;
+
                                          case 'meta':
-                                             echo esc_html($row[$column['meta']]);
+                                            $filter ='up_dynamic_table_meta_' . trim($column['meta']);
+                                            echo apply_filters($filter,$row[$column['meta']]);
                                              break;
                                          case 'taxonomy':
-                                             echo esc_html($row[$column['taxonomy']]);
+                                            $filter ='up_dynamic_table_meta_' . trim($column['taxonomy']);
+                                            echo apply_filters($filter,$row[$column['taxonomy']]);
                                              break;
                                         case 'value':
-                                            echo  "yess";
+                                            echo  "test";
                                             break;
+                                        default:
+                                            $filter ='up_dynamic_table_field_' . trim($column['type']);
+                                            echo apply_filters($filter,$row[$column['type']]);
+                                        break;
                                      }
 
                        
